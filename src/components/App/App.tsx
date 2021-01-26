@@ -4,6 +4,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import { NavigationBar } from '../common';
+import AssessmentList from "../AssessmentList/AssessmentList";
 
 const TmpDiv = (props: { content: string }) => {
   const { content } = props;
@@ -37,7 +38,7 @@ function App() {
             () => <Redirect to="/assessment-list" />
           } />
           <Route exact path="/assessment-list">
-            <TmpDiv content={"Assessment List"} />
+            <AssessmentList/>
           </Route>
           <Route exact path="/sessions">
             <TmpDiv content={"Sessions"} />

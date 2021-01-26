@@ -63,7 +63,7 @@ function NavigationBar() {
                         <Tabs value={selectedTab} onChange={handleChangeTabs} className={classes.tabItems}>
                             <Tab label="Assessment List" onClick={() => history.push("/assessment-list")} />
                             <Tab label="Sessions" onClick={() => history.push("/sessions")} />
-                            <Tab label="About Me" onClick={() => history.push("/about-me")} />
+                            <Tab label="About" onClick={() => history.push("/about-me")} />
                         </Tabs>
 
                         <SettingsComposition />

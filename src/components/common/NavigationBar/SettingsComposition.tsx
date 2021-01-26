@@ -83,7 +83,7 @@ const SettingsComposition = () => {
                             <ClickAwayListener onClickAway={handleClose}>
                                 {/* <SettingsMenu open={open} id="settings-list-grow" handleClose={handleClose} handleListKeyDown={handleListKeyDown} /> */}
                                 <MenuList autoFocusItem={open} id="settings-list-grow" onKeyDown={handleListKeyDown}>
-                                    <MenuItem>
+                                    <MenuItem disableRipple style={{ backgroundColor: 'transparent' }}>
                                         <IconButton onClick={handleResetButton}>
                                             <RotateLeftOutlined />
                                         </IconButton>
@@ -91,7 +91,7 @@ const SettingsComposition = () => {
                                             <Typography align="center">Reset</Typography>
                                         </div>
                                     </MenuItem>
-                                    <MenuItem>
+                                    <MenuItem disableRipple style={{ backgroundColor: 'transparent' }}>
                                         <Switch
                                             checked={currentTheme === "light" ? false : true}
                                             onChange={handleSwitchChange}

@@ -8,6 +8,7 @@ const fetchRawAssessment = async (assessmentURL:string) =>{
 
 test("Grab assessments list from github", async () => {
     const assessments = await getAssessmentInfos() || [];
+    console.log(assessments)
     expect(assessments.length).toBeGreaterThan(20);
 })
 

@@ -20,7 +20,7 @@ export interface Assessment {
 }
 
 
-const getAssessmentInfos = async (): Promise<Array<AssessmentInfo> | void> =>{
+const getAssessmentInfos = async (): Promise<Array<AssessmentInfo> | undefined> =>{
     const assessmentsURL = "https://raw.githubusercontent.com/Ebazhanov/linkedin-skill-assessments-quizzes/master/README.md"
         
     return fetch(assessmentsURL).then(response => response.text().then(content=>{
@@ -39,13 +39,15 @@ const getAssessmentInfos = async (): Promise<Array<AssessmentInfo> | void> =>{
                 return {"title":title,"link":link, "numQuestions":numQuestions,"assessmentStatus": assessmentStatus}
             })
             
-            return assessmentInfos.filter(item=> item.title && item.assessmentStatus === 'with answers')
+            assessmentInfos = assessmentInfos.filter(item=> item.title && ['with answers','partially answered'].includes(item.assessmentStatus || ""))
+            localStorage.setItem("assessmentInfos", JSON.stringify(assessmentInfos))
+            return assessmentInfos
         }
         else{
             alert("Failed to parse list of assessment.")
             throw new Error("Failed to parse list of assessment.")
         }
-    })).catch((e) => alert(e))
+    })).catch((e) => undefined)
 }
 
 const getAssessment = async (assessmentInfo: AssessmentInfo) : Promise<Assessment>  => {
@@ -56,6 +58,11 @@ const getAssessment = async (assessmentInfo: AssessmentInfo) : Promise<Assessmen
         if(partitioned_raw_question_sets.length === 0){throw new Error("Failed to partition question.")}
 
         let question_sets = partitioned_raw_question_sets.map(extractQuestionSet).filter(checkQuestionSet)
+        if(question_sets.length === 0){
+            throw new Error(`No question parsed for ${assessmentInfo.title}.`)
+        }else{
+            localStorage.setItem(assessmentInfo.title || "default_title", JSON.stringify({assessmentInfo: assessmentInfo, questionSets: question_sets}))
+        }
         
         return {assessmentInfo: assessmentInfo, questionSets: question_sets}
     }else{

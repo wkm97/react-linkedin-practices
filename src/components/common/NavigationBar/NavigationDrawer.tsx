@@ -47,9 +47,9 @@ const NavigationDrawer = (props: Props) => {
                     <ListItemIcon><AddBox /></ListItemIcon>
                     <ListItemText primary="Assessment List" />
                 </ListItem>
-                <ListItem button key="sessions" onClick={() => handleOnClick("/sessions")}>
+                <ListItem button key="practices" onClick={() => handleOnClick("/practices")}>
                     <ListItemIcon><Bookmarks /></ListItemIcon>
-                    <ListItemText primary="Sessions" />
+                    <ListItemText primary="Practices" />
                 </ListItem>
                 <ListItem button key="about-me" onClick={() => handleOnClick("/about-me")}>
                     <ListItemIcon><Info /></ListItemIcon>

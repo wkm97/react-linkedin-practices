@@ -5,10 +5,11 @@ import logo from './logo.svg';
 import './App.css';
 import { NavigationBar } from '../common';
 import AssessmentList from "../AssessmentList/AssessmentList";
+import Practice from "../Practice/Practice";
 
 const TmpDiv = (props: { content: string }) => {
   const { content } = props;
-  console.log(content)
+  
   return (<header className="App-header">
     <img src={logo} className="App-logo" alt="logo" />
     <p>
@@ -40,8 +41,8 @@ function App() {
           <Route exact path="/assessment-list">
             <AssessmentList/>
           </Route>
-          <Route exact path="/sessions">
-            <TmpDiv content={"Sessions"} />
+          <Route path="/practice/:title">
+            <Practice/>
           </Route>
           <Route exact path="/about-me">
             <TmpDiv content={"About me"} />

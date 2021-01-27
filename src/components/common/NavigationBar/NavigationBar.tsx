@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -35,6 +35,7 @@ function NavigationBar() {
     const [selectedTab, setSelectedTab] = useState(0);
     const [openNavDrawer, setOpenNavDrawer] = useState(false);
 
+
     const handleChangeTabs = (_: React.ChangeEvent<{}>, newValue: number) => {
         setSelectedTab(newValue);
     };
@@ -52,6 +53,19 @@ function NavigationBar() {
 
     const trigger = useScrollTrigger();
 
+    useEffect(()=>{
+        history.listen((location, action)=>{
+            if(location.pathname.includes('/assessment-list')){
+                setSelectedTab(0)
+            }else if(location.pathname.includes('/practice')){
+                setSelectedTab(1)
+            }else{
+                setSelectedTab(2)
+            }
+        })
+
+    }, [history])
+
 
     return (
         <React.Fragment>
@@ -62,7 +76,7 @@ function NavigationBar() {
                         <div style={{ flexGrow: 1 }} />
                         <Tabs value={selectedTab} onChange={handleChangeTabs} className={classes.tabItems}>
                             <Tab label="Assessment List" onClick={() => history.push("/assessment-list")} />
-                            <Tab label="Sessions" onClick={() => history.push("/sessions")} />
+                            <Tab label="Practices" onClick={() => history.push("/practice")} />
                             <Tab label="About" onClick={() => history.push("/about-me")} />
                         </Tabs>
 

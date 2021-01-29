@@ -1,7 +1,9 @@
-import { Typography } from "@material-ui/core";
+import { Container, List, ListItem } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AssessmentInfo, getAssessment, getAssessmentInfos, QuestionSet } from "../../services/assessment";
+
+import QuestionComponent from "./QuestionComponent";
 
 const Practice = () => {
     const { title } = useParams<{ title: string }>();
@@ -28,12 +30,17 @@ const Practice = () => {
             })
         }
 
+
     }, [title])
 
     return (
-        <>
-            {assessment?.questionSets.map((questionSet, idx) => <Typography key={idx} style={{ marginTop: 100 }} variant="h6">{questionSet.question}</Typography>)}
-        </>
+        <Container>
+            <List>
+                {assessment?.questionSets.map((questionSet, idx) => <ListItem key={idx}>
+                    <QuestionComponent questionSet={questionSet}></QuestionComponent>
+                </ListItem>)}
+            </List>
+        </Container>
     )
 }
 

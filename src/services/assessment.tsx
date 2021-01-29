@@ -82,7 +82,7 @@ const extractQuestionSet = (rawQuestion: string) : QuestionSet => {
     let question = "default question"
     let answerIndex = -1
     questionByLine.some((line, idx)=>{
-        if(line.match(/-\s{0,1}\[[x{0,1}|\s]\]/)){
+        if(line.match(/-\s{0,1}\[[x{0,1}|\s]\]/i)){
             question = questionByLine.slice(0,idx).join("")
             answerIndex = idx
             return true
@@ -100,7 +100,7 @@ const extractQuestionSet = (rawQuestion: string) : QuestionSet => {
 }
 
 const extractChoiceAnswerDetail = (rawAnswer:string) =>{
-    let choiceAnswerDetail = rawAnswer.trim().split(/(?=-\s{0,1}\[[x{0,1}|\s]\])/g)
+    let choiceAnswerDetail = rawAnswer.trim().split(/(?=-\s{0,1}\[[x{0,1}|\s]\])/ig)
     let answer = extractAnswerIdx(choiceAnswerDetail)
     let choiceDetail = removeAnswer(choiceAnswerDetail)
     let detail = extractDetail(choiceAnswerDetail)

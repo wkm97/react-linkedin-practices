@@ -29,11 +29,11 @@ test("Partition questions for assessments", async ()=>{
 })
 
 test("Break down question procedure", async()=>{
-    const assessmentURL = "https://raw.githubusercontent.com/Ebazhanov/linkedin-skill-assessments-quizzes/master/git/git-quiz.md"
+    const assessmentURL = "https://raw.githubusercontent.com/Ebazhanov/linkedin-skill-assessments-quizzes/master/java/java-quiz.md"
     let content = await fetchRawAssessment(assessmentURL)
     const partitions = partitionQuestionPaper(content)
 
-    let rawQuestionSet = partitions[17]
+    let rawQuestionSet = partitions[3]
     
     const questionSet = extractQuestionSet(rawQuestionSet)
     console.log(questionSet)
@@ -42,8 +42,6 @@ test("Break down question procedure", async()=>{
         "choice":expect.any(Array),
         "answer":expect.any(Array), 
         })
-    // const answer = extractChoiceAnswerDetail(rawAnswer)
-    // console.log(rawAnswer)
 })
 
 

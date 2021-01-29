@@ -3,18 +3,18 @@ import { MuiThemeProvider } from '@material-ui/core/styles'
 import getTheme from './base'
 
 type Props = {
-    children: React.ReactNode
+  children: React.ReactNode
 }
 
 // eslint-disable-next-line no-unused-vars
 export const CustomThemeContext = React.createContext(
   {
     currentTheme: 'light',
-    setTheme: (str:string) => console.log("setTheme function is null"),
+    setTheme: (str: string) => console.log("setTheme function is null"),
   },
 )
 
-const CustomThemeProvider = (props:Props) => {
+const CustomThemeProvider = (props: Props) => {
   // eslint-disable-next-line react/prop-types
   const { children } = props
 
@@ -29,7 +29,7 @@ const CustomThemeProvider = (props:Props) => {
   // console.log(theme)
 
   // Wrap _setThemeName to store new theme names in localStorage
-  const setThemeName = (name:string) => {
+  const setThemeName = (name: string) => {
     localStorage.setItem('appTheme', name)
     _setThemeName(name)
   }

@@ -53,8 +53,9 @@ const getAssessmentInfos = async (): Promise<Array<AssessmentInfo> | undefined> 
 const getAssessment = async (assessmentInfo: AssessmentInfo) : Promise<Assessment>  => {
     if(assessmentInfo.link){
         let content = await (await fetch(assessmentInfo.link)).text()
+        const imagePath = assessmentInfo.link.split("/").slice(0, -1).join("/")
 
-        let partitioned_raw_question_sets = partitionQuestionPaper(content);
+        let partitioned_raw_question_sets = partitionQuestionPaper(content, imagePath);
         if(partitioned_raw_question_sets.length === 0){throw new Error("Failed to partition question.")}
 
         let question_sets = partitioned_raw_question_sets.map(extractQuestionSet).filter(checkQuestionSet)
@@ -105,6 +106,9 @@ const extractChoiceAnswerDetail = (rawAnswer:string) =>{
     let choiceDetail = removeAnswer(choiceAnswerDetail)
     let detail = extractDetail(choiceAnswerDetail)
     
+    const cleanedLastChoiceDetail = choiceDetail[choiceAnswerDetail.length-1].replace(detail || "","")
+    choiceDetail[choiceAnswerDetail.length-1] = cleanedLastChoiceDetail
+    
     return {"choice": choiceDetail, "answer": answer, "detail": detail}
 }
 
@@ -146,18 +150,33 @@ const extractAnswerIdx = (choiceAnswer: Array<string>) => {
 const removeAnswer = (choiceAnswer: Array<string>) => {
     let choice = choiceAnswer.map(item => item.replace(/-\s{0,1}\[[x{0,1}|\s]\]/ig, ""))
     choice = choice.map(item=>item.replace(/<{2,3}-{0,3}\s{0,1}CORRECT.*/ig, ""))
+    choice = choice.map(item=>item.replace(/<{2,3}-{0,3}\s{0,1}WRONG.*/ig, ""))
 
     return choice.map(stringUtils.trimNewline)
 }
 
-const partitionQuestionPaper = (questionPaper:string): Array<string> => {
+const partitionQuestionPaper = (questionPaper:string, linkForImage:string): Array<string> => {
     //EXAMPLE: #### Q 14.
 
     let content = (questionPaper.match(/#{3,4}\s{0,1}Q{0,1}\.{0,1}\s{0,1}\d+(.|\n)*/g) || [undefined])[0];
     if(content){
-        // return content.match(/#{2,4}\s{0,1}Q{0,1}\.{0,1}\d+[^#]*/g) || []
-        // return content.split(/\n#{3,4}\s{0,1}Q{0,1}\.{0,1}\d+\.{0,1}/)
-        return content.split(/(?=#{3,4}\s{0,1}Q{0,1}\.{0,1}\s{0,1}\d+\.{0,1})/g).filter(item=>item.length > 4)
+        let partitionedQuestions = content.split(/(?=#{3,4}\s{0,1}Q{0,1}\.{0,1}\s{0,1}\d+\.{0,1})/g).filter(item=>item.length > 4)
+
+        // IMAGE PATH
+        partitionedQuestions = partitionedQuestions.map(question=>{
+            const imageMarkdown = question.match(/\[.*]\(((?!https).*)\)/)
+            if(imageMarkdown){
+                const completedImageMarkdown = imageMarkdown[0].replace("(","("+linkForImage+"/")
+                question = question.replace(/\[.*]\(((?!https).*)\)/, completedImageMarkdown)
+                return question
+
+            }else{
+                return question
+            }
+        })
+
+        return partitionedQuestions
+
     } 
     return [];
 }

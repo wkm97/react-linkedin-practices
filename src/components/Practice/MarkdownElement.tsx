@@ -10,10 +10,10 @@ import { CustomThemeContext } from '../../themes/CustomThemeProvider';
 const styles = (theme: Theme) => (
     createStyles({
         listItem: {
-            marginTop: theme.spacing(1),
+            marginTop: theme.spacing(1)
         },
         markdownItem: {
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: "transparent",
             textAlign: "left",
             width:"100%"
         }
@@ -37,8 +37,8 @@ const options = {
             component: Typography,
             props: { gutterBottom: true, variant: 'caption', paragraph: true },
         },
-        p: { component: Typography, props: { paragraph: true } },
-        a: { component: Link },
+        p: { component: Typography, props: { paragraph: true, style:{margin:"0.35em"} } },
+        a: { component: Link, props:{rel:"noopener noreferrer", target:"_blank"}},
         li: {
             component: withStyles(styles)(({ classes, ...props }: { classes: any }) => (
                 <li className={classes.listItem}>
@@ -48,6 +48,9 @@ const options = {
         },
         img:{
             props:{ style:{maxWidth:"100%"}}
+        },
+        code:{
+            props:{ style:{marginRight:"1vw"}}
         }
     },
 };

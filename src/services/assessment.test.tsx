@@ -17,8 +17,9 @@ test("Partition questions for assessments", async ()=>{
     const assessments = await getAssessmentInfos() || [];
     const fetchPartitions = async (assessment:AssessmentInfo) => {
         if(assessment.link){
+            const imagePath = assessment.link.split("/").slice(0, -1).join("/")
             let content = await fetchRawAssessment(assessment.link)
-            const partitions = partitionQuestionPaper(content)
+            const partitions = partitionQuestionPaper(content, imagePath)
             if(partitions.length < assessment.numQuestions - tolerateQuestionNum){
                 console.log(`The number of questions is too less in this assessment (${assessment.title})`)
             }
@@ -29,11 +30,12 @@ test("Partition questions for assessments", async ()=>{
 })
 
 test("Break down question procedure", async()=>{
-    const assessmentURL = "https://raw.githubusercontent.com/Ebazhanov/linkedin-skill-assessments-quizzes/master/java/java-quiz.md"
+    const assessmentURL = "https://raw.githubusercontent.com/Ebazhanov/linkedin-skill-assessments-quizzes/master/html/html-quiz.md"
     let content = await fetchRawAssessment(assessmentURL)
-    const partitions = partitionQuestionPaper(content)
+    const imagePath = assessmentURL.split("/").slice(0, -1).join("/")
+    const partitions = partitionQuestionPaper(content, imagePath)
 
-    let rawQuestionSet = partitions[3]
+    let rawQuestionSet = partitions[11]
     
     const questionSet = extractQuestionSet(rawQuestionSet)
     console.log(questionSet)

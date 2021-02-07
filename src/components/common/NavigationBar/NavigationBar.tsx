@@ -29,9 +29,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 function NavigationBar() {
+
     const history = useHistory();
     const classes = useStyles();
-    const initTabNumber = window.location.href.includes("/assessment-list") ? 0:1
+    const initTabNumber = window.location.href.includes("/about") ? 1 : 0
 
     const [selectedTab, setSelectedTab] = useState<number>(initTabNumber);
     const [openNavDrawer, setOpenNavDrawer] = useState(false);

@@ -3,6 +3,7 @@ import { ArrowForward } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AssessmentInfo, getAssessmentInfos } from "../../services/assessment";
+import * as path from "../../constants/path"
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -139,7 +140,7 @@ const AssessmentList = () => {
                                             }>
                                             <ListItemText inset primary={assessment.title} secondary={<span className={classes.itemListTextSecondary}>{`${assessment.numQuestions} questions ${assessment.assessmentStatus}`}</span>}></ListItemText>
 
-                                            <IconButton onClick={()=> history.push(`/practice/${assessment.title}`)}><ArrowForward /></IconButton>
+                                            <IconButton onClick={()=> history.push(`${path.PRACTICE}/${assessment.title}`)}><ArrowForward /></IconButton>
                                         </ListItem>
                                     </React.Fragment>
                                 )

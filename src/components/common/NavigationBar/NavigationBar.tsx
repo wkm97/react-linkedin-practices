@@ -9,6 +9,7 @@ import { createStyles, IconButton, makeStyles, Tabs, Tab, Theme } from '@materia
 import { useHistory } from 'react-router-dom';
 import NavigationDrawer from './NavigationDrawer';
 import SettingsComposition from './SettingsComposition';
+import * as path from "../../../constants/path"
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -32,7 +33,7 @@ function NavigationBar() {
 
     const history = useHistory();
     const classes = useStyles();
-    const initTabNumber = window.location.href.includes("/about") ? 1 : 0
+    const initTabNumber = window.location.href.includes(path.ABOUT) ? 1 : 0
 
     const [selectedTab, setSelectedTab] = useState<number>(initTabNumber);
     const [openNavDrawer, setOpenNavDrawer] = useState(false);
@@ -76,8 +77,8 @@ function NavigationBar() {
                         <Typography variant="h6">LinkedIn Practice Assessment</Typography>
                         <div style={{ flexGrow: 1 }} />
                         <Tabs value={selectedTab} onChange={handleChangeTabs} className={classes.tabItems}>
-                            <Tab label="Assessment List" onClick={() => history.push("/assessment-list")} />
-                            <Tab label="About" onClick={() => history.push("/about")} />
+                            <Tab label="Assessment List" onClick={() => history.push(path.ASSESSMENT_LIST)} />
+                            <Tab label="About" onClick={() => history.push(path.ABOUT)} />
                         </Tabs>
 
                         <SettingsComposition />

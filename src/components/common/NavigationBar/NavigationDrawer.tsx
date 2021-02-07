@@ -3,6 +3,7 @@ import { AddBox, Info, Brightness4 as DarkButton, Brightness7 as LightButton } f
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { CustomThemeContext } from "../../../themes/CustomThemeProvider";
+import * as path from "../../../constants/path"
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -43,11 +44,11 @@ const NavigationDrawer = (props: Props) => {
             <div className={classes.toolbar} />
             <List>
                 <Divider />
-                <ListItem button key="assessment" onClick={() => handleOnClick("/assessment-list")}>
+                <ListItem button key="assessment" onClick={() => handleOnClick(path.ASSESSMENT_LIST)}>
                     <ListItemIcon><AddBox /></ListItemIcon>
                     <ListItemText primary="Assessment List" />
                 </ListItem>
-                <ListItem button key="about-me" onClick={() => handleOnClick("/about-me")}>
+                <ListItem button key="about" onClick={() => handleOnClick(path.ABOUT)}>
                     <ListItemIcon><Info /></ListItemIcon>
                     <ListItemText primary="About" />
                 </ListItem>

@@ -50,6 +50,10 @@ const getAssessmentInfos = async (): Promise<Array<AssessmentInfo> | undefined> 
     })).catch((e) => undefined)
 }
 
+const repairQuestionNumber = (question:string, num:number) => {
+    return question.replace(/#{3,5}\s{0,1}Q{0,1}\.{0,1}\s{0,1}\d+\.{0,1}/g, `Q ${num}.`)
+}
+
 const getAssessment = async (assessmentInfo: AssessmentInfo) : Promise<Assessment>  => {
     if(assessmentInfo.link){
         let content = await (await fetch(assessmentInfo.link)).text()
@@ -59,6 +63,10 @@ const getAssessment = async (assessmentInfo: AssessmentInfo) : Promise<Assessmen
         if(partitioned_raw_question_sets.length === 0){throw new Error("Failed to partition question.")}
 
         let question_sets = partitioned_raw_question_sets.map(extractQuestionSet).filter(checkQuestionSet)
+        question_sets.forEach((questionSet, idx)=>{
+            question_sets[idx].question = repairQuestionNumber(questionSet.question, idx+1)
+        })
+
         if(question_sets.length === 0){
             throw new Error(`No question parsed for ${assessmentInfo.title}.`)
         }else{

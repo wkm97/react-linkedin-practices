@@ -4,6 +4,6 @@ import App from './App';
 
 test('renders learn react link', () => {
   render(<App />);
-  const linkElement = screen.getByText(/LinkedIn assessment practices from Github/i);
+  const linkElement = screen.getByText(/LinkedIn Practice Assessment/i);
   expect(linkElement).toBeInTheDocument();
 });

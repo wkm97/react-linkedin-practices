@@ -1,19 +1,27 @@
 # Reactjs Project - LinkedIn Assessment Practices
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
 Library Used:
-- [x] [React Router](https://reactrouter.com/)
-- [x] [CSS Framework Material-UI](https://material-ui.com/)
-- [x] [highlight.js](https://highlightjs.org/)
-- [x] [markdown-to-jsx](https://probablyup.com/markdown-to-jsx/)
+
+[React Router](https://reactrouter.com/)
+
+[CSS Framework Material-UI](https://material-ui.com/)
+
+[highlight.js](https://highlightjs.org/)
+
+[markdown-to-jsx](https://probablyup.com/markdown-to-jsx/)
+
 
 Extensive Use of Regex for transforming the data source.
+
 
 ## Official Reference
 
 React Docs - [ReactJs Documentation](https://reactjs.org/docs/getting-started.html) by Facebook React
 
 Material-UI Docs - [Material-UI Documentation](https://material-ui.com/) by mui-org
+
 
 ## Useful Articles and References
 

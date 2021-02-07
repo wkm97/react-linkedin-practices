@@ -16,13 +16,19 @@ const styles = (theme: Theme) => (
             backgroundColor: "transparent",
             textAlign: "left",
             width:"100%"
+        },
+        markdownLink: {
+            color: theme.palette.secondary.dark
         }
     })
 );
 
 const useStyles = makeStyles(styles);
 
-const options = {
+const getOptions = (classes:any) => {
+
+    return{
+    
     overrides: {
         h1: {
             component: Typography,
@@ -38,7 +44,7 @@ const options = {
             props: { gutterBottom: true, variant: 'caption', paragraph: true },
         },
         p: { component: Typography, props: { paragraph: true, style:{margin:"0.35em"} } },
-        a: { component: Link, props:{rel:"noopener noreferrer", target:"_blank"}},
+        a: { component: Link, props:{className: classes.markdownLink ,rel:"noopener noreferrer", target:"_blank"}},
         li: {
             component: withStyles(styles)(({ classes, ...props }: { classes: any }) => (
                 <li className={classes.listItem}>
@@ -53,7 +59,7 @@ const options = {
             props:{ style:{marginRight:"1vw"}}
         }
     },
-};
+}}
 
 export default function MarkdownCustom(props: any) {
     const classes = useStyles();
@@ -75,5 +81,5 @@ export default function MarkdownCustom(props: any) {
 
     }, [rootRef, currentTheme]);
 
-    return <div className={classes.markdownItem} ref={rootRef} ><ReactMarkdown options={options} {...props} /></div>;
+    return <div className={classes.markdownItem} ref={rootRef} ><ReactMarkdown options={getOptions(classes)} {...props} /></div>;
 }

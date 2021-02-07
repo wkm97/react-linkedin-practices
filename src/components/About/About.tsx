@@ -74,7 +74,7 @@ const About = () => {
 
             <Card style={{ margin: 20 }}>
                 <CardContent>
-                    {aboutDetail ? <MarkdownCustom>{aboutDetail}</MarkdownCustom> : <div />}
+                    {aboutDetail ? <MarkdownCustom align="left">{aboutDetail}</MarkdownCustom> : <div />}
                 </CardContent>
             </Card>
         </Container>

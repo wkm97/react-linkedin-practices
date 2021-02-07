@@ -1,38 +1,72 @@
 import * as React from 'react'
-// import { AssessmentInfo, QuestionSet } from '../services/assessment'
+import { QuestionSet } from '../services/assessment'
+import { areArraysEqualSets } from '../utils/arrayUtils'
 
-type Action = { type: "submitAnswer", payload?: {count:number} }
+export enum questionStatus {
+    NEUTRAL = "NEUTRAL",
+    CORRECT = "CORRECT",
+    WRONG = "WRONG",
+    SELECTED = "SELECTED"
+}
+
+type Action = { type: "submitAnswer", questionIdx: number, selectedIdx: number[] } |
+            { type: "changePractice", questionSets: QuestionSet[] } |
+            { type: "selectChoices", questionIdx: number, selectedIdx: number[] }
 type Dispatch = (action: Action) => void
 
-type State = { count: number }
+type State = { questionSets: QuestionSet[], curr_session: { status: string, answer: number[], selected: number[] | null }[] }
 
-type PracticeProviderProps = { children: React.ReactNode, count:number }//assessment:{ assessmentInfo: AssessmentInfo, questionSets: QuestionSet[] }}
+type PracticeProviderProps = { children: React.ReactNode }//assessment:{ assessmentInfo: AssessmentInfo, questionSets: QuestionSet[] }}
 
 const PracticeStateContext = React.createContext<State | undefined>(undefined)
 
 const PracticeDispatchContext = React.createContext<Dispatch | undefined>(undefined,)
 
+const initialState = {
+    questionSets: [],
+    curr_session: []
+}
+
 const practiceReducer = (state: State, action: Action) => {
     switch (action.type) {
 
-        case 'submitAnswer': {
-            console.log(state.count)
-            return {count: action.payload?.count || 0}
-            // return { count: state.count + 1 }
+        case 'selectChoices': {
+            let curr_session = state.curr_session
+            curr_session[action.questionIdx].selected = action.selectedIdx
+            curr_session[action.questionIdx].status = questionStatus.SELECTED
+            return { ...state, curr_session: curr_session}
+        }
 
+        case 'submitAnswer': {
+            let curr_session = state.curr_session
+            let question = curr_session[action.questionIdx]
+            question.selected = action.selectedIdx
+            if(areArraysEqualSets(question.answer, question.selected)){
+                question.status = questionStatus.CORRECT
+            }else{
+                question.status = questionStatus.WRONG
+            }
+            curr_session[action.questionIdx] = question
+            return { ...state, curr_session: curr_session}
+        }
+
+        case 'changePractice': {
+            const curr_session = action.questionSets.map(item => ({ status: questionStatus.NEUTRAL, answer: item.answer, selected: null }))
+
+            return { ...state, questionSets: action.questionSets, curr_session: curr_session }
         }
 
         default: {
 
-            throw new Error(`Unhandled action type: ${action.type}`)
+            throw new Error(`Unhandled action type`); // : ${action.type}`)
 
         }
 
     }
 }
 
-const PracticeProvider = ({ children, count }: PracticeProviderProps) => {
-    const [state, dispatch] = React.useReducer(practiceReducer, { count: count })
+const PracticeProvider = ({ children }: PracticeProviderProps) => {
+    const [state, dispatch] = React.useReducer(practiceReducer, initialState)
 
     return (
 
@@ -78,4 +112,4 @@ const usePracticeDispatch = () => {
 }
 
 
-export {PracticeProvider, usePracticeState, usePracticeDispatch};
+export { PracticeProvider, usePracticeState, usePracticeDispatch };

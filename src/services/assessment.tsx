@@ -158,9 +158,9 @@ const removeAnswer = (choiceAnswer: Array<string>) => {
 const partitionQuestionPaper = (questionPaper:string, linkForImage:string): Array<string> => {
     //EXAMPLE: #### Q 14.
 
-    let content = (questionPaper.match(/#{3,4}\s{0,1}Q{0,1}\.{0,1}\s{0,1}\d+(.|\n)*/g) || [undefined])[0];
+    let content = (questionPaper.match(/#{3,5}\s{0,1}Q{0,1}\.{0,1}\s{0,1}\d+(.|\n)*/g) || [undefined])[0];
     if(content){
-        let partitionedQuestions = content.split(/(?=#{3,4}\s{0,1}Q{0,1}\.{0,1}\s{0,1}\d+\.{0,1})/g).filter(item=>item.length > 4)
+        let partitionedQuestions = content.split(/(?=#{3,5}\s{0,1}Q{0,1}\.{0,1}\s{0,1}\d+\.{0,1})/g).filter(item=>item.length > 4)
 
         // IMAGE PATH
         partitionedQuestions = partitionedQuestions.map(question=>{

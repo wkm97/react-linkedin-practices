@@ -55,7 +55,7 @@ const options = {
     },
 };
 
-export default function Markdown(props: any) {
+export default function MarkdownCustom(props: any) {
     const classes = useStyles();
     const rootRef = useRef<HTMLDivElement>(null);
     const { currentTheme } = useContext(CustomThemeContext)

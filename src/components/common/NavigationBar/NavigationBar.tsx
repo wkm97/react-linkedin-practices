@@ -31,8 +31,9 @@ const useStyles = makeStyles((theme: Theme) =>
 function NavigationBar() {
     const history = useHistory();
     const classes = useStyles();
+    const initTabNumber = window.location.href.includes("/assessment-list") ? 0:1
 
-    const [selectedTab, setSelectedTab] = useState(0);
+    const [selectedTab, setSelectedTab] = useState<number>(initTabNumber);
     const [openNavDrawer, setOpenNavDrawer] = useState(false);
 
 
@@ -54,13 +55,12 @@ function NavigationBar() {
     const trigger = useScrollTrigger();
 
     useEffect(()=>{
-        history.listen((location, action)=>{
+        history.listen((location, action)=>{    
+            console.log(location.pathname)
             if(location.pathname.includes('/assessment-list')){
                 setSelectedTab(0)
-            }else if(location.pathname.includes('/practice')){
+            }else if(location.pathname.includes('/about')){
                 setSelectedTab(1)
-            }else{
-                setSelectedTab(2)
             }
         })
 
@@ -76,8 +76,7 @@ function NavigationBar() {
                         <div style={{ flexGrow: 1 }} />
                         <Tabs value={selectedTab} onChange={handleChangeTabs} className={classes.tabItems}>
                             <Tab label="Assessment List" onClick={() => history.push("/assessment-list")} />
-                            <Tab label="Practices" onClick={() => history.push("/practice")} />
-                            <Tab label="About" onClick={() => history.push("/about-me")} />
+                            <Tab label="About" onClick={() => history.push("/about")} />
                         </Tabs>
 
                         <SettingsComposition />

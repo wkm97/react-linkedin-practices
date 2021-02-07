@@ -1,11 +1,12 @@
-import { Button, Container, createStyles, Dialog, DialogContent, DialogContentText, DialogTitle, Fab, List, ListItem, makeStyles, Theme } from "@material-ui/core";
+import { Container, createStyles, Dialog, DialogContent, DialogTitle, Fab, List, ListItem, makeStyles, Theme } from "@material-ui/core";
 import { PlaylistAddCheck } from "@material-ui/icons";
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import { PracticeProvider } from "../../contexts/practice-context";
-import { AssessmentInfo, getAssessment, getAssessmentInfos, QuestionSet } from "../../services/assessment";
+import { usePracticeDispatch } from "../../contexts/practice-context";
+import { Assessment, getAssessment, getAssessmentInfos } from "../../services/assessment";
 
 import QuestionComponent from "./QuestionComponent";
+import ReviewQuestions from "./ReviewQuestions";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -23,8 +24,9 @@ const useStyles = makeStyles((theme: Theme) =>
 const Practice = () => {
     const classes = useStyles();
     const { title } = useParams<{ title: string }>();
-    const [assessment, setAssessment] = useState<{ assessmentInfo: AssessmentInfo, questionSets: QuestionSet[] }>()
+    const [assessment, setAssessment] = useState<Assessment>()
     const [openReview, setOpenReview] = useState(false);
+    const dispatchPractice = usePracticeDispatch();
     const questionSetRefs = useMemo(() => {
         return assessment?.questionSets.reduce((acc: { [key: string]: React.RefObject<HTMLLIElement> }, value, idx) => {
             acc["question-" + String(idx)] = React.createRef();
@@ -36,7 +38,7 @@ const Practice = () => {
         setOpenReview(!openReview)
     }
 
-    const handleClick = (id: string) => {
+    const handleGotoQuestion = (id: string) => {
         questionSetRefs[id].current?.scrollIntoView({
             behavior: 'smooth',
             block: 'center',
@@ -45,20 +47,37 @@ const Practice = () => {
         setOpenReview(!openReview)
     };
 
+    const memoQuestions = useMemo(() => {
+        return <List>
+            {assessment?.questionSets.map((questionSet, idx) =>
+                <ListItem key={idx} style={{ display: "block" }} ref={questionSetRefs["question-" + String(idx)]}>
+                    <QuestionComponent questionNum={idx} questionSet={questionSet}></QuestionComponent>
+                </ListItem>)}
+        </List>
+    }, [assessment?.questionSets, questionSetRefs])
+
+
+
+
 
 
     useEffect(() => {
-        const localAssessment = localStorage.getItem(title)
+        const localAssessmentString = localStorage.getItem(title)
 
-        if (localAssessment) {
-            setAssessment(JSON.parse(localAssessment))
+        if (localAssessmentString) {
+            const localAssessment = JSON.parse(localAssessmentString) as Assessment
+            setAssessment(localAssessment)
+            dispatchPractice({ type: "changePractice", questionSets: localAssessment?.questionSets || [] })
             console.log("available in local storage")
         } else {
             console.log("not available in local storage")
             getAssessmentInfos().then(assessmentInfos => {
                 const assessmentInfo = assessmentInfos?.filter(assessmentInfo => assessmentInfo.title === title)[0]
                 if (assessmentInfo) {
-                    getAssessment(assessmentInfo).then(assessment => setAssessment(assessment))
+                    getAssessment(assessmentInfo).then(assessment => {
+                        setAssessment(assessment)
+                        dispatchPractice({ type: "changePractice", questionSets: assessment.questionSets })
+                    })
                 }
                 else {
                     alert("Fail to retrieve assessment")
@@ -67,46 +86,30 @@ const Practice = () => {
         }
 
 
-    }, [title])
+    }, [title, dispatchPractice])
 
     return (
         <>
-            <PracticeProvider count={1000}>
-                <Container style={{ marginTop: "74px" }}>
-                    {
-                        useMemo(() => {
-                            return <List>
-                                {assessment?.questionSets.map((questionSet, idx) =>
-                                    <ListItem key={idx} style={{ display: "block" }} ref={questionSetRefs["question-" + String(idx)]}>
-                                        <QuestionComponent questionSet={questionSet}></QuestionComponent>
-                                    </ListItem>)}
-                            </List>
-                        }, [assessment?.questionSets, questionSetRefs])
-                    }
-
-                </Container>
-                <Fab variant="extended" onClick={handleTriggerReview} className={classes.floatingButton} color="secondary" aria-label="submit or check">
-                    <PlaylistAddCheck />Review
+            <Container style={{ marginTop: "74px" }}>
+                {assessment ? memoQuestions : <p>LOADING</p>}
+            </Container>
+            <Fab variant="extended" onClick={handleTriggerReview} className={classes.floatingButton} color="secondary" aria-label="submit or check">
+                <PlaylistAddCheck />Review
                 </Fab>
-                <Dialog
-                    open={openReview}
-                    aria-labelledby="qna-review-title"
-                    aria-details="qna-review-details"
-                    onClose={handleTriggerReview}
-                >
-                    <DialogTitle id="qna-review-title">
-                        Questions and Answers Review
+            <Dialog
+                open={openReview}
+                aria-labelledby="qna-review-title"
+                aria-details="qna-review-details"
+                onClose={handleTriggerReview}
+                style={{ width: "90vw", height: "90vh" }}
+            >
+                <DialogTitle id="qna-review-title">
+                    Questions and Answers Review
                 </DialogTitle>
-                    <DialogContent>
-                        <Button variant="contained" onClick={() => { handleClick("question-5") }}>Hello World</Button>
-                        <DialogContentText id="qna-review-details">
-                            Let Google help apps determine location. This means sending anonymous location data to
-                            Google, even when no apps are running.
-                    </DialogContentText>
-                    </DialogContent>
-                </Dialog>
-            </PracticeProvider>
-
+                <DialogContent style={{ padding: 50, paddingTop:0 , overflowX: "hidden" }}>
+                    <ReviewQuestions handleGotoQuestion={handleGotoQuestion} />
+                </DialogContent>
+            </Dialog>
         </>
     )
 }

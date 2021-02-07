@@ -1,6 +1,13 @@
-# Getting Started with Create React App
+# Reactjs Project - LinkedIn Assessment Practices
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Library Used:
+- [x] [React Router](https://reactrouter.com/)
+- [x] [CSS Framework Material-UI](https://material-ui.com/)
+- [x] [highlight.js](https://highlightjs.org/)
+- [x] [markdown-to-jsx](https://probablyup.com/markdown-to-jsx/)
+
+Extensive Use of Regex for transforming the data source.
 
 ## Available Scripts
 

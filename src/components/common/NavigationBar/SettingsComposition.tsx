@@ -1,6 +1,6 @@
 // REFERENCE: https://material-ui.com/components/menus/#menulist-composition
 import { ClickAwayListener, createStyles, Grow, IconButton, makeStyles, MenuItem, MenuList, Paper, Popper, Switch, Theme, Typography } from "@material-ui/core";
-import { RotateLeftOutlined, Settings } from "@material-ui/icons";
+import { Settings } from "@material-ui/icons";
 import React, { useContext } from "react";
 import { CustomThemeContext } from "../../../themes/CustomThemeProvider";
 
@@ -49,10 +49,10 @@ const SettingsComposition = () => {
         setTheme(theme)
     }
 
-    const handleResetButton = (event: React.MouseEvent<EventTarget>) => {
-        handleClose(event)
+    // const handleResetButton = (event: React.MouseEvent<EventTarget>) => {
+    //     handleClose(event)
         
-    }
+    // }
 
     React.useEffect(() => {
         if (prevOpen.current === true && open === false) {
@@ -81,16 +81,15 @@ const SettingsComposition = () => {
                     >
                         <Paper>
                             <ClickAwayListener onClickAway={handleClose}>
-                                {/* <SettingsMenu open={open} id="settings-list-grow" handleClose={handleClose} handleListKeyDown={handleListKeyDown} /> */}
                                 <MenuList autoFocusItem={open} id="settings-list-grow" onKeyDown={handleListKeyDown}>
-                                    <MenuItem disableRipple style={{ backgroundColor: 'transparent' }}>
+                                    {/* <MenuItem disableRipple style={{ backgroundColor: 'transparent' }}>
                                         <IconButton onClick={handleResetButton}>
                                             <RotateLeftOutlined />
                                         </IconButton>
                                         <div style={{ flexGrow: 1 }}>
                                             <Typography align="center">Reset</Typography>
                                         </div>
-                                    </MenuItem>
+                                    </MenuItem> */}
                                     <MenuItem disableRipple style={{ backgroundColor: 'transparent' }}>
                                         <Switch
                                             checked={currentTheme === "light" ? false : true}

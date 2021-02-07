@@ -1,5 +1,5 @@
 import { createStyles, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, makeStyles, Theme } from "@material-ui/core"
-import { Bookmarks, AddBox, Info, RotateLeftOutlined, Brightness4 as DarkButton, Brightness7 as LightButton } from "@material-ui/icons";
+import { AddBox, Info, Brightness4 as DarkButton, Brightness7 as LightButton } from "@material-ui/icons";
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { CustomThemeContext } from "../../../themes/CustomThemeProvider";
@@ -35,8 +35,8 @@ const NavigationDrawer = (props: Props) => {
         setTheme(currentTheme === "light" ? "dark" : "light")
     }
 
-    const handleResetButton = (event: React.MouseEvent<EventTarget>) => {
-    }
+    // const handleResetButton = (event: React.MouseEvent<EventTarget>) => {
+    // }
 
     return (
         <Drawer anchor="right" open={openStatus} onClose={handleCloseDrawer} className={classes.navDrawer}>
@@ -47,23 +47,19 @@ const NavigationDrawer = (props: Props) => {
                     <ListItemIcon><AddBox /></ListItemIcon>
                     <ListItemText primary="Assessment List" />
                 </ListItem>
-                <ListItem button key="practices" onClick={() => handleOnClick("/practices")}>
-                    <ListItemIcon><Bookmarks /></ListItemIcon>
-                    <ListItemText primary="Practices" />
-                </ListItem>
                 <ListItem button key="about-me" onClick={() => handleOnClick("/about-me")}>
                     <ListItemIcon><Info /></ListItemIcon>
-                    <ListItemText primary="About Me" />
+                    <ListItemText primary="About" />
                 </ListItem>
                 <Divider />
-                <ListItem key="reset-button" >
+                {/* <ListItem key="reset-button" >
                     <ListItemIcon >
                         <IconButton edge="start" onClick={handleResetButton}>
                             <RotateLeftOutlined />
                         </IconButton>
                     </ListItemIcon>
                     <ListItemText primary="Reset" />
-                </ListItem>
+                </ListItem> */}
                 <ListItem key="switch-theme" >
                     <ListItemIcon>
                         <IconButton edge="start" onClick={handleSwitchTheme}>

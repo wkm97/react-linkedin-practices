@@ -1,31 +1,12 @@
 import React from 'react';
 
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import logo from './logo.svg';
 import './App.css';
 import { NavigationBar } from '../common';
 import AssessmentList from "../AssessmentList/AssessmentList";
 import Practice from "../Practice/Practice";
-
-const TmpDiv = (props: { content: string }) => {
-  const { content } = props;
-  
-  return (<header className="App-header">
-    <img src={logo} className="App-logo" alt="logo" />
-    <p>
-      Edit <code>{content}</code> and save to reload.
-        </p>
-    <a
-      className="App-link"
-      href="https://reactjs.org"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      learn react
-        </a>
-  </header>
-  )
-}
+import { PracticeProvider } from '../../contexts/practice-context';
+import About from '../About/About';
 
 
 function App() {
@@ -39,13 +20,15 @@ function App() {
             () => <Redirect to="/assessment-list" />
           } />
           <Route exact path="/assessment-list">
-            <AssessmentList/>
+            <AssessmentList />
           </Route>
           <Route path="/practice/:title">
-            <Practice/>
+            <PracticeProvider>
+              <Practice />
+            </PracticeProvider>
           </Route>
-          <Route exact path="/about-me">
-            <TmpDiv content={"About me"} />
+          <Route exact path="/about">
+            <About/>
           </Route>
         </Switch>
       </BrowserRouter>

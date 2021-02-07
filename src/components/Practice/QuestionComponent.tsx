@@ -3,7 +3,7 @@ import { Check } from "@material-ui/icons";
 import React, { useState } from "react";
 import { usePracticeDispatch } from "../../contexts/practice-context";
 import { QuestionSet } from "../../services/assessment";
-import Markdown from "./MarkdownElement";
+import MarkdownCustom from "./MarkdownCustom";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -32,36 +32,38 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
+    questionNum: number
     questionSet: QuestionSet
 }
 
 const QuestionComponent = (props: Props) => {
     const classes = useStyles();
     const { questionSet } = props;
-    const [values, setValues] = useState<number[]>([])
+    const [selectedValues, setSelectedValues] = useState<number[]>([])
     const [showAnswer, setShowAnswer] = useState(false)
     const dispatch = usePracticeDispatch();
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedIdx = parseInt((event.target as HTMLInputElement).value)
-        setValues([selectedIdx]);
+        setSelectedValues([selectedIdx]);
+        dispatch({type: 'selectChoices', questionIdx: props.questionNum, selectedIdx:selectedValues})
     };
     const handleShowAnswer = () => {
         setShowAnswer(true);
-        dispatch({type: 'submitAnswer', payload:{count:10}})
+        dispatch({type: 'submitAnswer', questionIdx: props.questionNum, selectedIdx:selectedValues})
     };
 
 
     return (
         <Card variant="outlined">
             <CardContent>
-                <Markdown>{questionSet.question}</Markdown>
+                <MarkdownCustom>{questionSet.question}</MarkdownCustom>
                 <FormControl classes={{ root: classes.root }} component="fieldset">
-                    <RadioGroup classes={{ root: classes.root }} aria-label="choice" name="choices" value={values.length > 0 ? values[0]:null} onChange={handleChange}>
+                    <RadioGroup classes={{ root: classes.root }} aria-label="choice" name="choices" value={selectedValues.length > 0 ? selectedValues[0]:null} onChange={handleChange}>
                         {questionSet.choice.map((choiceItem, idx) => {
                             let labelClass = {}
                             if (showAnswer) {
-                                if (values.includes(idx) && !questionSet.answer.includes(idx)) {
+                                if (selectedValues.includes(idx) && !questionSet.answer.includes(idx)) {
                                     labelClass = { className: classes.wrongChoice }
                                 } else if (questionSet.answer.includes(idx)) {
                                     labelClass = { className: classes.correctChoice }
@@ -70,7 +72,7 @@ const QuestionComponent = (props: Props) => {
                             return <FormControlLabel {...labelClass} disabled={showAnswer} classes={{ root: classes.labelroot, label: classes.label }} key={idx} value={idx}
                                 control={<Radio />}
                                 label={
-                                    <Markdown>{choiceItem}</Markdown>
+                                    <MarkdownCustom>{choiceItem}</MarkdownCustom>
                                 } />
                         })}
                     </RadioGroup>
@@ -83,7 +85,7 @@ const QuestionComponent = (props: Props) => {
             </CardActions>
             <Collapse in={showAnswer} timeout="auto" unmountOnExit>
                 {questionSet.detail ? <CardContent>
-                    <Markdown>{questionSet.detail}</Markdown>
+                    <MarkdownCustom>{questionSet.detail}</MarkdownCustom>
                 </CardContent> : null}
             </Collapse>
         </Card>

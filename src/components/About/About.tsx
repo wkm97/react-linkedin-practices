@@ -37,23 +37,21 @@ const About = () => {
             <Card style={{ margin: 20 }}>
                 <CardContent>
                     <Box display="flex">
-                        <Typography variant="h5">Project Repository:</Typography>
-                        <div style={{flexGrow:1}}/>
+                        <Typography variant="h5">
+                            <Link
+                                color="textSecondary"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                href="https://github.com/wkm97/react-linkedin-practices"
+                            >
+                                (REPOSITORY) React LinkedIn Practices - Created by wkm97
+                            </Link>
+                        </Typography>
+                        <div style={{ flexGrow: 1 }} />
                         <Button variant="outlined" onClick={() => window.open("https://github.com/wkm97/react-linkedin-practices/issues", "_blank")}>
                             Report Issues
                         </Button>
                     </Box>
-
-                    <Typography align="left" variant="body1">
-                        <Link
-                            color="textSecondary"
-                            rel="noopener noreferrer"
-                            target="_blank"
-                            href="https://github.com/wkm97/react-linkedin-practices"
-                        >
-                        React LinkedIn Practices - Created by wkm97
-                    </Link>
-                    </Typography>
 
                 </CardContent>
                 <CardActions>

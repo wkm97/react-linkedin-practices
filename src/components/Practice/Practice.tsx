@@ -39,12 +39,17 @@ const Practice = () => {
     }
 
     const handleGotoQuestion = (id: string) => {
-        questionSetRefs[id].current?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-
-        })
         setOpenReview(!openReview)
+        window.scrollTo({
+            top: questionSetRefs[id].current?.offsetTop,
+            behavior:"smooth",
+        })
+        // questionSetRefs[id].current?.scrollIntoView({
+        //     behavior: 'smooth',
+        //     block: 'center',
+
+        // })
+        
     };
 
     const memoQuestions = useMemo(() => {

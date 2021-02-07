@@ -123,6 +123,17 @@ const ReviewQuestions = (props: Props) => {
                             >
                                 {idx + 1}
                             </Typography>
+                            {/* <Button
+                                style={
+                                    {
+                                        color: getQuestionStatusColor(item.status)
+                                    }
+                                }
+                                variant="text"
+                                onClick={() => { handleGotoQuestion(`question-${idx}`) }}
+                            >
+                                {idx + 1}
+                            </Button> */}
                         </Grid>
                     )
                 })}

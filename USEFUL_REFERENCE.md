@@ -3,10 +3,15 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 Library Used:
+
 [React Router](https://reactrouter.com/)
+
 [CSS Framework Material-UI](https://material-ui.com/)
+
 [highlight.js](https://highlightjs.org/)
+
 [markdown-to-jsx](https://probablyup.com/markdown-to-jsx/)
+
 
 Extensive Use of Regex for transforming the data source.
 

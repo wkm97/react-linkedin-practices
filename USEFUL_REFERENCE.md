@@ -15,15 +15,15 @@ Library Used:
 
 Extensive Use of Regex for transforming the data source.
 
-----------------------------------------------------------------------------------------------------
-## Official Reference
+
+# Official Reference
 
 React Docs - [ReactJs Documentation](https://reactjs.org/docs/getting-started.html) by Facebook React
 
 Material-UI Docs - [Material-UI Documentation](https://material-ui.com/) by mui-org
 
-----------------------------------------------------------------------------------------------------
-## Useful Articles and References
+
+# Useful Articles and References
 
 Project Structuring - [React Folder Structure in 5 Steps](https://www.robinwieruch.de/react-folder-structure) by Robin Wieruch
 

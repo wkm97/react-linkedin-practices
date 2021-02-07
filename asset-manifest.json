@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/react-linkedin-practices/static/css/main.2cbd59c8.chunk.css",
-    "main.js": "/react-linkedin-practices/static/js/main.52d3c14a.chunk.js",
-    "main.js.map": "/react-linkedin-practices/static/js/main.52d3c14a.chunk.js.map",
+    "main.js": "/react-linkedin-practices/static/js/main.d5e5f236.chunk.js",
+    "main.js.map": "/react-linkedin-practices/static/js/main.d5e5f236.chunk.js.map",
     "runtime-main.js": "/react-linkedin-practices/static/js/runtime-main.5ff02adc.js",
     "runtime-main.js.map": "/react-linkedin-practices/static/js/runtime-main.5ff02adc.js.map",
     "static/js/2.4574c7a9.chunk.js": "/react-linkedin-practices/static/js/2.4574c7a9.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.5ff02adc.js",
     "static/js/2.4574c7a9.chunk.js",
     "static/css/main.2cbd59c8.chunk.css",
-    "static/js/main.52d3c14a.chunk.js"
+    "static/js/main.d5e5f236.chunk.js"
   ]
 }

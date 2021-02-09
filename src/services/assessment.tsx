@@ -21,7 +21,7 @@ export interface Assessment {
 
 
 const getAssessmentInfos = async (): Promise<Array<AssessmentInfo> | undefined> =>{
-    const assessmentsURL = "https://raw.githubusercontent.com/Ebazhanov/linkedin-skill-assessments-quizzes/master/README.md"
+    const assessmentsURL = "https://raw.githubusercontent.com/wkm97/react-linkedin-practices/master/ASSESSMENTLIST.md"
         
     return fetch(assessmentsURL).then(response => response.text().then(content=>{
         let result = content.match(/\| \[Adobe(.|\n)*\|/g)

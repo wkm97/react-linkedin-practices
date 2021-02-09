@@ -30,12 +30,12 @@ test("Partition questions for assessments", async ()=>{
 })
 
 test("Break down question procedure", async()=>{
-    const assessmentURL = "https://raw.githubusercontent.com/Ebazhanov/linkedin-skill-assessments-quizzes/master/html/html-quiz.md"
+    const assessmentURL = "https://raw.githubusercontent.com/Ebazhanov/linkedin-skill-assessments-quizzes/master/git/git-quiz.md"
     let content = await fetchRawAssessment(assessmentURL)
     const imagePath = assessmentURL.split("/").slice(0, -1).join("/")
     const partitions = partitionQuestionPaper(content, imagePath)
 
-    let rawQuestionSet = partitions[11]
+    let rawQuestionSet = partitions[2]
     
     const questionSet = extractQuestionSet(rawQuestionSet)
     console.log(questionSet)
